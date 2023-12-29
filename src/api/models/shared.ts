@@ -1,3 +1,9 @@
+export interface BaseModel<T> {
+  responseCode: string;
+  responseMsg: string;
+  responseDetails: T[];
+}
+
 export interface PagedResult<T> {
   pageNumber: number;
   documentCount: number;
@@ -33,17 +39,17 @@ export interface ListItemView {
   contactPhone: string;
 }
 
-export interface ApiError{
+export interface ApiError {
   data: {
-    title:string
-  },
-  status:number
+    title: string;
+  };
+  status: number;
 }
 
-export interface GenericResponse<T>{
-  content: T[],
-  error: any,
-  errorMessage: string,
-  hasError: boolean,
-  isSuccess: boolean
+export interface GenericResponse<T> {
+  content: T[];
+  error: any;
+  errorMessage: string;
+  hasError: boolean;
+  isSuccess: boolean;
 }
