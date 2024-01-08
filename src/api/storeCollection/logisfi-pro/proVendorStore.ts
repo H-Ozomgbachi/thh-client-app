@@ -1,33 +1,34 @@
 import { makeAutoObservable, runInAction } from "mobx";
 import { store } from "../../main/appStore";
-import { proPartnerData } from "../../models/logisfi-pro/partner";
+import { proVendorData } from "../../models/logisfi-pro/vendor";
 import { BaseModel } from "../../models/shared";
-// export class partnerStore {
-//   partners: PartnerData[] = [];
+// export class proVendorStore {
+//   vendors: proVendorData[] = [];
 
 //   constructor() {
 //     makeAutoObservable(this);
 //   }
-
-//   getAllPartners = async () => {
+//   getAllVendors = async () => {
 //     try {
 //       window.scrollTo(0, 0);
 //       store.commonStore.setLoading(true);
 //       const response = await fetch(
-//         "https://demo-logisfipro-api.thehaulagehub.com/api/v1/Partners/GetPartners?PageNumber=1&PageSize=10"
+//         "https://demo-logisfipro-api.thehaulagehub.com/api/v1/Vendors/GetVendors?PageNumber=1&PageSize=10"
 //       );
-//       //check if the request was successful
+//       //check
 //       if (!response.ok) {
 //         throw new Error(`HTTP error! Status: ${response.status}`);
 //       }
 
 //       //Parse the response JSON
 //       const data = await response.json();
+
 //       // Process the retrieved data
 //       console.log("Data from the API:", data);
 //       const result = data.responseDetails;
+
 //       runInAction(() => {
-//         this.partners = result;
+//         this.vendors = result;
 //       });
 //     } catch (error) {
 //       //handle errors
@@ -39,9 +40,9 @@ import { BaseModel } from "../../models/shared";
 //   };
 // }
 
-export class proPartnerStore {
-  partners: proPartnerData[] = [];
-  apiUrl = "https://demo-logisfipro-api.thehaulagehub.com/api/v1/Partners";
+export class proVendorStore {
+  vendors: proVendorData[] = [];
+  apiUrl = "https://demo-logisfipro-api.thehaulagehub.com/api/v1/Vendors";
 
   constructor() {
     makeAutoObservable(this);
@@ -78,29 +79,29 @@ export class proPartnerStore {
     }
   }
 
-  async getAllPartners(pageNumber: number = 1, pageSize: number = 50) {
+  async getAllVendors(pageNumber: number = 1, pageSize: number = 50) {
     try {
       const data = (await this.fetchData(
-        `GetPartners?PageNumber=${pageNumber}&PageSize=${pageSize}`
-      )) as BaseModel<proPartnerData>;
+        `GetVendors?PageNumber=${pageNumber}&PageSize=${pageSize}`
+      )) as BaseModel<proVendorData>;
 
       runInAction(() => {
-        this.partners = data.responseDetails;
+        this.vendors = data.responseDetails;
       });
     } catch (error) {
       throw error;
     }
   }
 
-  async createPartner(data: proPartnerData) {
+  async createVendor(data: proVendorData) {
     try {
       (await this.fetchData(
-        "CreatePartner",
+        "CreateVendor",
         "POST",
         data
-      )) as BaseModel<proPartnerData>;
-      this.getAllPartners();
-      store.commonStore.setSuccess("New Partner Added ✓");
+      )) as BaseModel<proVendorData>;
+      this.getAllVendors();
+      store.commonStore.setSuccess("New Vendor Added ✓");
     } catch (error) {
       throw error;
     } finally {
@@ -108,11 +109,11 @@ export class proPartnerStore {
     }
   }
 
-  async updatePartner(data: proPartnerData, itemId: string) {
+  async updateVendor(data: proVendorData, itemId: string) {
     try {
-      await this.fetchData(`UpdatePartner`, "PUT", data);
-      this.getAllPartners();
-      store.commonStore.setSuccess("Partner Updated successfully");
+      await this.fetchData(`UpdateVendor`, "PUT", data);
+      this.getAllVendors();
+      store.commonStore.setSuccess("Vendor Updated successfully");
     } catch (error) {
       throw error;
     } finally {
@@ -120,11 +121,11 @@ export class proPartnerStore {
     }
   }
 
-  async deletePartner(itemId: string) {
+  async deleteProVendor(itemId: string) {
     try {
-      await this.fetchData(`DeletePartner/${itemId}`, "DELETE");
-      this.getAllPartners();
-      store.commonStore.setSuccess("Partner removed successfully");
+      await this.fetchData(`DeleteVendor/${itemId}`, "DELETE");
+      this.getAllVendors();
+      store.commonStore.setSuccess("Vendor removed successfully");
     } catch (error) {
       throw error;
     }
