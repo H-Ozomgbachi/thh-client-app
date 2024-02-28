@@ -41,6 +41,11 @@ export default observer(function AdminOverviewContent() {
             to="/admin/market-outlook"
             icon={<Icon name="th" />}
           />
+          <ContentLinkCard
+            name="Logisfi Pro"
+            to="/admin/logisfi-pro"
+            icon={<Icon name="chart line" />}
+          />
         </div>
       </div>
     </div>

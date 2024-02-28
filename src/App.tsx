@@ -22,6 +22,7 @@ import Dashboard from "./pages/dashboard/Dashboard";
 import PriceWatch from "./pages/dashboard/PriceWatch";
 import RouteWatch from "./pages/dashboard/RouteWatch";
 import TruckInvestmentAdmin from "./pages/admin/TruckInvestmentAdmin";
+import LogisfiProAdmin from "./pages/admin/LogisfiProAdmin";
 import BecomeInvestor from "./pages/dashboard/BecomeInvestor";
 import CreateNewAsset from "./components/admin/truck-investment/investor-assets/CreateNewAsset";
 import ClientPrices from "./components/admin/truck-investment/clients/ClientPrices";
@@ -118,6 +119,7 @@ export default observer(function App() {
               <Route path="truck-request" element={<TruckRequestAdmin />} />
               <Route path="market-outlook" element={<MarketOutlookAdmin />} />
               <Route path="pricewatch" element={<PricewatchAdmin />} />
+              <Route path="logisfi-pro" element={<LogisfiProAdmin />} />
               <Route
                 path="transtracker"
                 element={<TransactionTrackerAdmin />}
