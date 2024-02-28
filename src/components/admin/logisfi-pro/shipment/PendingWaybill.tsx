@@ -1,8 +1,6 @@
 import { observer } from "mobx-react-lite";
-
 import { Button } from "semantic-ui-react";
 import SimpleTable from "../../../shared/table/SimpleTable";
-// import { CommonStore } from "../../../../api/storeCollection/commonStore";
 import { useStore } from "../../../../api/main/appStore";
 import FulfillShipment from "./FulfillShipment";
 import { useEffect } from "react";
@@ -27,7 +25,6 @@ export default observer(function PendingWaybill() {
             "truck no.",
             "shipment price",
             "vendor price",
-            "status",
             "",
           ]}
           data={proShipmentStore.shipments}
@@ -41,14 +38,14 @@ export default observer(function PendingWaybill() {
               <td>{el.truckNumber}</td>
               <td>{el.shipmentPrice}</td>
               <td>{el.vendorPrice}</td>
-              <td>{el.status}</td>
 
               <td>
                 {el.status === "NotConfirmed" ? (
                   <Button
                     color="blue"
-                    content="Confirm"
+                    content="Add waybill no."
                     size="tiny"
+                    icon="plus circle"
                     onClick={() =>
                       commonStore.setModalContent(
                         <FulfillShipment currentShipment={el} />
@@ -56,7 +53,7 @@ export default observer(function PendingWaybill() {
                     }
                   />
                 ) : (
-                  "waybilled"
+                  <Button color="green" content="waybilled" size="tiny" />
                 )}
               </td>
             </tr>

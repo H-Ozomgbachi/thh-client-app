@@ -1,15 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { Button } from "semantic-ui-react";
 import SimpleTable from "../../../shared/table/SimpleTable";
 import { useStore } from "../../../../api/main/appStore";
-import BalanceDisbursement from "./BalanceDisbursement";
 import { useEffect } from "react";
-export default observer(function PendingDisbursement() {
-  const { disbursementStore, commonStore } = useStore();
+export default observer(function DisbursementHistory() {
+  const { disbursementStore } = useStore();
 
   useEffect(() => {
     (async function getData() {
-      await disbursementStore.getAllDisbursements(false);
+      await disbursementStore.getAllDisbursements();
     })();
   }, [disbursementStore]);
 
@@ -29,12 +27,9 @@ export default observer(function PendingDisbursement() {
             "total amount",
             "amount paid",
             "remaining amount",
-
-            "",
+            "disburse complete",
           ]}
-          data={disbursementStore.disbursements.filter(
-            (shipment) => shipment.remainingAmount > 0
-          )}
+          data={disbursementStore.disbursements}
           tableBodyBuilder={(el) => (
             <tr key={el.id}>
               <td>{el.origin}</td>
@@ -48,18 +43,7 @@ export default observer(function PendingDisbursement() {
               <td>{el.totalAmount} </td>
               <td>{el.amountPaid} </td>
               <td>{el.remainingAmount} </td>
-              <td>
-                <Button
-                  color="blue"
-                  content="balance"
-                  size="tiny"
-                  onClick={() =>
-                    commonStore.setModalContent(
-                      <BalanceDisbursement currentDisbursement={el} />
-                    )
-                  }
-                />
-              </td>
+              <td>{`${el.disburseComplete}`} </td>
             </tr>
           )}
         />

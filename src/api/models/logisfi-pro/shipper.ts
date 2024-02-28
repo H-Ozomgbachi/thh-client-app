@@ -1,4 +1,4 @@
-export interface ShipperData {
+export interface proShipperData {
   shipperCode: string;
   name: string;
   address: string;

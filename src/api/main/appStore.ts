@@ -20,7 +20,11 @@ import { CompanyStore } from "../storeCollection/truck-request/companyStore";
 import { PlaceStore } from "../storeCollection/truck-request/placeStore";
 import { VendorStore } from "../storeCollection/truck-request/vendorStore";
 import { UserAccountStore } from "../storeCollection/userAccountStore";
-
+import { proShipperStore } from "../storeCollection/logisfi-pro/proShipperStore";
+import { proVendorStore } from "../storeCollection/logisfi-pro/proVendorStore";
+import { proPartnerStore } from "../storeCollection/logisfi-pro/proPartnerStore";
+import { disbursementStore } from "../storeCollection/logisfi-pro/disbursementStore";
+import { proShipmentStore } from "../storeCollection/logisfi-pro/proShipmentStore";
 interface Store {
   commonStore: CommonStore;
   userAccountStore: UserAccountStore;
@@ -51,6 +55,12 @@ interface Store {
   thhExpenseStore: ThhExpenseStore;
 
   truckPortalStore: TruckPortalStore;
+  //Add logisfi pro shipper
+  proShipperStore: proShipperStore;
+  proVendorStore: proVendorStore;
+  proPartnerStore: proPartnerStore;
+  disbursementStore: disbursementStore;
+  proShipmentStore: proShipmentStore;
 }
 
 export const store: Store = {
@@ -83,6 +93,12 @@ export const store: Store = {
   thhExpenseStore: new ThhExpenseStore(),
 
   truckPortalStore: new TruckPortalStore(),
+  //Logisfi
+  proShipperStore: new proShipperStore(),
+  proVendorStore: new proVendorStore(),
+  proPartnerStore: new proPartnerStore(),
+  disbursementStore: new disbursementStore(),
+  proShipmentStore: new proShipmentStore(),
 };
 
 export const StoreContext = createContext(store);

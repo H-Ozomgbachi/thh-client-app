@@ -7,6 +7,8 @@ import { CustomTextInput } from "../../../shared/custom-input/CustomInputs";
 import { proShipperData } from "../../../../api/models/logisfi-pro/shipper";
 import { proVendorData } from "../../../../api/models/logisfi-pro/vendor";
 import { proPartnerData } from "../../../../api/models/logisfi-pro/partner";
+import * as Yup from "yup";
+
 interface Props {
   shippers: proShipperData[];
   vendors: proVendorData[];
@@ -38,6 +40,14 @@ export default observer(function CreateShipment({
       <div className="p-3 mt-3 shadow-card">
         <Formik
           initialValues={INITIAL_VALUES}
+          validationSchema={Yup.object({
+            driverName: Yup.string()
+              .max(50, "Must be 50 characters or less")
+              .required("Required"),
+            driverPhone: Yup.string()
+              .max(11, "Enter correct phone number")
+              .required("Required"),
+          })}
           onSubmit={(values) => {
             console.log(values);
             proShipmentStore.createShipment(values);
@@ -168,26 +178,3 @@ export default observer(function CreateShipment({
     </>
   );
 });
-
-{
-  /* <CustomTextInput
-                name="shipperCode"
-                placeholder="Enter shipper code"
-                label="Shipper Code"
-                required
-              /> */
-}
-{
-  /* <CustomTextInput
-                name="vendorCode"
-                placeholder="Enter vendor code"
-                label="Vendor Code"
-                required
-              />
-              <CustomTextInput
-                name="partnerCode"
-                placeholder="Enter partner code"
-                label="Partner Code"
-                required
-              /> */
-}

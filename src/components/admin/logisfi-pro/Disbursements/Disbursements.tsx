@@ -6,6 +6,7 @@ import { Icon } from "semantic-ui-react";
 import CustomDefaultTabHeading from "../../../shared/headings/CustomDefaultTabHeading";
 import BasicHorizontalTab from "../../../shared/horizontal-tab/BasicHorizontalTab";
 import PendingDisbursement from "./PendingDisbursement";
+import DisbursementHistory from "./DisbursementHistory";
 // import PendingDisbursement from "./PendingDisbursement";
 export default observer(function Shipments() {
   // const { disbursementStore } = useStore();
@@ -24,7 +25,7 @@ export default observer(function Shipments() {
             icon: <Icon name="book" />,
           },
         ]}
-        panels={[<PendingDisbursement />, <h2>history</h2>]}
+        panels={[<PendingDisbursement />, <DisbursementHistory />]}
       />
     </>
   );

@@ -7,8 +7,7 @@ import {
   UpdateDisbursementModel,
   disbursementData,
 } from "../../../../api/models/logisfi-pro/disbursements";
-import { useEffect } from "react";
-
+import * as Yup from "yup";
 interface Props {
   currentDisbursement: disbursementData;
 }
@@ -29,6 +28,12 @@ export default observer(function BalanceDisbursement({
           disburseId: currentDisbursement?.id ?? "",
           amount: 0,
         }}
+        validationSchema={Yup.object({
+          amount: Yup.number().oneOf(
+            [currentDisbursement.remainingAmount],
+            `The remaining amount is #${currentDisbursement.remainingAmount}`
+          ),
+        })}
         onSubmit={(values: UpdateDisbursementModel) => {
           values.amount = Number(values.amount);
           console.log(values);

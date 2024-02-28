@@ -6,3 +6,11 @@ export interface proPartnerData {
   bankCode: string;
   dateCreated: string;
 }
+
+export interface RegisterProPartnerModel {
+  partnerCode: string;
+  name: string;
+  accountName: string;
+  accountNumber: string;
+  bankCode: string;
+}

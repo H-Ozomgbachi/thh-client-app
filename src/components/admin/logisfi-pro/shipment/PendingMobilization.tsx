@@ -31,7 +31,8 @@ export default observer(function PendingMobilization() {
             "",
           ]}
           data={proShipmentStore.shipments.filter(
-            (shipment) => shipment.status === "Confirmed"
+            (shipment) =>
+              !shipment.shipperEmailApproval && shipment.status === "Confirmed"
           )}
           tableBodyBuilder={(el) => (
             <tr key={el.id}>
@@ -48,7 +49,7 @@ export default observer(function PendingMobilization() {
               <td>
                 <Button
                   color="blue"
-                  content="Confirm"
+                  content="Mobilize"
                   size="tiny"
                   onClick={() =>
                     commonStore.setModalContent(

@@ -46,7 +46,7 @@ export class disbursementStore {
     }
   }
   async getAllDisbursements(
-    status: boolean = false,
+    status: boolean = true,
     pageNumber: number = 1,
     pageSize: number = 50
   ) {

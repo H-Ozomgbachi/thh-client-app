@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { CustomTextInput } from "../../../shared/custom-input/CustomInputs";
 import { useStore } from "../../../../api/main/appStore";
 import { proVendorData } from "../../../../api/models/logisfi-pro/vendor";
-
+import * as Yup from "yup";
 interface Props {
   currentVendor: proVendorData | null;
 }
@@ -22,98 +22,86 @@ export default observer(function CreateorUpdateProVendor({
     address: currentVendor?.address ?? "",
     city: currentVendor?.city ?? "",
     state: currentVendor?.state ?? "",
-    accountName: currentVendor?.accountName ?? "",
-    accountNumber: currentVendor?.accountNumber ?? "",
-    bankName: currentVendor?.bankName ?? "",
-    bankCode: currentVendor?.bankCode ?? "",
-    dateCreated: currentVendor?.dateCreated ?? "",
   };
 
   return (
     <>
-      <h5 className="text-secondary">
-        {currentVendor ? "Update vendor data" : "Create new vendor"}
-      </h5>
-
-      <Formik
-        initialValues={INITIAL_VALUES}
-        onSubmit={(values, { setErrors }) => {
-          currentVendor
-            ? proVendorStore.updateVendor(values, currentVendor!.vendorCode)
-            : proVendorStore.createVendor(values);
-        }}
-      >
-        {({ isSubmitting }) => (
-          <Form>
-            {currentVendor ? null : (
+      <div className="vendor-form">
+        <h5 className="text-secondary ">
+          {currentVendor ? "Update vendor data" : "Create new vendor"}
+        </h5>
+        <Formik
+          initialValues={INITIAL_VALUES}
+          validationSchema={Yup.object({
+            contactEmail: Yup.string()
+              .email("Invalid email address")
+              .required("Required"),
+          })}
+          onSubmit={(values, { setErrors }) => {
+            console.log(values);
+            currentVendor
+              ? proVendorStore.updateVendor(values, currentVendor!.vendorCode)
+              : proVendorStore.createVendor(values);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              {currentVendor ? null : (
+                <CustomTextInput
+                  name="vendorCode"
+                  placeholder="Enter vendor code"
+                  label="Vendor Code"
+                  required
+                />
+              )}
               <CustomTextInput
-                name="vendorCode"
-                placeholder="Enter vendor code"
-                label="Vendor Code"
+                name="name"
+                placeholder="Enter vendor name"
+                label="Name"
                 required
               />
-            )}
-            <CustomTextInput
-              name="name"
-              placeholder="Enter vendor name"
-              label="name"
-            />
-            <CustomTextInput
-              name="contactEmail"
-              placeholder="Enter contact email"
-              label="contact email"
-            />
-            <CustomTextInput
-              name="contactPhone"
-              placeholder="Enter contact number"
-              label="contact number"
-            />
-            <CustomTextInput
-              name="address"
-              placeholder="Enter vendor address"
-              label="Address"
-            />
-            <CustomTextInput
-              name="city"
-              placeholder="Enter vendor city"
-              label="city"
-            />
-            <CustomTextInput
-              name="state"
-              placeholder="Enter vendor state"
-              label="state"
-            />
-            <CustomTextInput
-              name="accountName"
-              placeholder="Enter account name"
-              label="account name"
-            />
-            <CustomTextInput
-              name="accountNumber"
-              placeholder="Enter account number"
-              label="account number"
-            />
-            <CustomTextInput
-              name="bankName"
-              placeholder="Enter bank name"
-              label="bank name"
-            />
-            <CustomTextInput
-              name="bankCode"
-              placeholder="Enter bank code"
-              label="bank code"
-            />
+              <CustomTextInput
+                name="contactEmail"
+                placeholder="Enter contact email"
+                label="Contact email"
+                required
+              />
+              <CustomTextInput
+                name="contactPhone"
+                placeholder="Enter contact number"
+                label="Contact number"
+                required
+              />
+              <CustomTextInput
+                name="address"
+                placeholder="Enter vendor address"
+                label="Address"
+                required
+              />
+              <CustomTextInput
+                name="city"
+                placeholder="Enter vendor city"
+                label="City"
+                required
+              />
+              <CustomTextInput
+                name="state"
+                placeholder="Enter vendor state"
+                label="State"
+                required
+              />
 
-            <Button
-              loading={isSubmitting}
-              content={currentVendor ? "Continue" : "Add new vendor"}
-              type="submit"
-              color="vk"
-              className="official-form-btn"
-            />
-          </Form>
-        )}
-      </Formik>
+              <Button
+                loading={isSubmitting}
+                content={currentVendor ? "Continue" : "Add new vendor"}
+                type="submit"
+                color="vk"
+                className="official-form-btn"
+              />
+            </Form>
+          )}
+        </Formik>
+      </div>
     </>
   );
 });

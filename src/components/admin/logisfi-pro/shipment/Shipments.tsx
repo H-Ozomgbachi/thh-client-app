@@ -10,16 +10,15 @@ import PendingWaybill from "./PendingWaybill";
 import PendingMobilization from "./PendingMobilization";
 import { useEffect } from "react";
 
-
 export default observer(function Shipments() {
-  const { proShipperStore,proVendorStore, proPartnerStore } = useStore();
+  const { proShipperStore, proVendorStore, proPartnerStore } = useStore();
   useEffect(() => {
     (async function getData() {
       await proShipperStore.getAllShippers();
       await proVendorStore.getAllVendors();
       await proPartnerStore.getAllPartners();
     })();
-  }, [proShipperStore,proVendorStore]);
+  }, [proShipperStore, proVendorStore, proPartnerStore]);
 
   return (
     <>
@@ -38,16 +37,20 @@ export default observer(function Shipments() {
             text: "Pending Mobilization",
             icon: <Icon name="money" />,
           },
-          {
-            text: "Shipment History",
-            icon: <Icon name="book" />,
-          },
+          // {
+          //   text: "Shipment History",
+          //   icon: <Icon name="book" />,
+          // },
         ]}
         panels={[
-          <CreateShipment shippers={proShipperStore.shippers} vendors={proVendorStore.vendors} partners={proPartnerStore.partners}/>,
+          <CreateShipment
+            shippers={proShipperStore.shippers}
+            vendors={proVendorStore.vendors}
+            partners={proPartnerStore.partners}
+          />,
           <PendingWaybill />,
           <PendingMobilization />,
-          <h2>d</h2>,
+          // <h2>d</h2>,
         ]}
       />
     </>

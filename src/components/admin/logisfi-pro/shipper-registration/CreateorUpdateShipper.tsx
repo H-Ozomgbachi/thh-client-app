@@ -4,7 +4,7 @@ import { observer } from "mobx-react-lite";
 import { CustomTextInput } from "../../../shared/custom-input/CustomInputs";
 import { useStore } from "../../../../api/main/appStore";
 import { proShipperData } from "../../../../api/models/logisfi-pro/shipper";
-
+import * as Yup from "yup";
 interface Props {
   currentShipper: proShipperData | null;
 }
@@ -31,6 +31,14 @@ export default observer(function CreateorUpdateProShipper({
       </h5>
       <Formik
         initialValues={INITIAL_VALUES}
+        validationSchema={Yup.object({
+          approverEmail: Yup.string()
+            .email("Invalid email address")
+            .required("Required"),
+          contactEmail: Yup.string()
+            .email("Invalid email address")
+            .required("Required"),
+        })}
         onSubmit={(values, { setErrors }) => {
           currentShipper
             ? proShipperStore.updateShipper(values, currentShipper!.shipperCode)

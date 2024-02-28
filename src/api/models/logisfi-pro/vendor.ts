@@ -1,4 +1,4 @@
-export interface VendorData {
+export interface proVendorData {
   vendorCode: string;
   name: string;
   contactEmail: string;
@@ -6,9 +6,4 @@ export interface VendorData {
   address: string;
   city: string;
   state: string;
-  accountName: any;
-  accountNumber: any;
-  bankName: any;
-  bankCode: any;
-  dateCreated: string;
 }

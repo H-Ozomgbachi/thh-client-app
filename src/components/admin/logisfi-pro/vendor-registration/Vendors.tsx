@@ -1,77 +1,69 @@
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
 import { Button } from "semantic-ui-react";
 import { useStore } from "../../../../api/main/appStore";
 import CustomDefaultTabHeading from "../../../shared/headings/CustomDefaultTabHeading";
 import SimpleTable from "../../../shared/table/SimpleTable";
-import CreateVendorForm from "./CreateVendorForm";
-const testData = [
-  {
-    id: 1,
-    firstName: "Qudus",
-    lastName: "Adeyemi",
-    phoneNumber: "08179251327",
-    accountName: "Guaranty Trust Bank",
-    accountNumber: "0147689888",
-  },
-  {
-    id: 2,
-    firstName: "Qudus",
-    lastName: "Adeyemi",
-    phoneNumber: "08179251327",
-    accountName: "Guaranty Trust Bank",
-    accountNumber: "0147689888",
-  },
-  {
-    id: 3,
-    firstName: "Qudus",
-    lastName: "Adeyemi",
-    phoneNumber: "08179251327",
-    accountName: "Guaranty Trust Bank",
-    accountNumber: "0147689888",
-  },
-  {
-    id: 4,
-    firstName: "Qudus",
-    lastName: "Adeyemi",
-    phoneNumber: "08179251327",
-    accountName: "Guaranty Trust Bank",
-    accountNumber: "0147689888",
-  },
-  {
-    id: 5,
-    firstName: "Qudus",
-    lastName: "Adeyemi",
-    phoneNumber: "08179251327",
-    accountName: "Guaranty Trust Bank",
-    accountNumber: "0147689888",
-  },
-];
+import ModalDecisionContent from "../../../shared/modal/ModalDecisionContent";
+import { useEffect } from "react";
+import CreateorUpdateProVendor from "./CreateorUpdateVendor";
+
 export default observer(function Vendors() {
-  const { commonStore } = useStore();
-  const [data] = useState(testData);
+  const { proVendorStore, commonStore } = useStore();
+
+  useEffect(() => {
+    (async function getData() {
+      await proVendorStore.getAllVendors();
+    })();
+  }, [proVendorStore]);
 
   return (
     <>
-      <CustomDefaultTabHeading content="Vendor Registration" />
+      <CustomDefaultTabHeading content="Vendors" />
 
       <div className="shadow-card p-3 mt-3">
         <SimpleTable
           titles={[
-            "First Name",
-            "Last Name",
-            "Phone Number",
-            "Account Name",
-            "Account Number",
+            "vendor code",
+            "vendor name",
+            "contact email",
+            "contact phone",
+            "",
           ]}
-          data={data}
-          tableBodyBuilder={(el) => (
-            <tr key={el.id}>
-              <td>{el.firstName}</td>
-              <td>{el.lastName}</td>
-              <td>{el.phoneNumber}</td>
-              <td>{el.accountName}</td>
-              <td>{el.accountNumber}</td>
+          data={proVendorStore.vendors}
+          tableBodyBuilder={(el, id) => (
+            <tr key={id}>
+              <td>{el.vendorCode}</td>
+              <td>{el.name}</td>
+              <td>{el.contactEmail}</td>
+              <td>{el.contactPhone}</td>
+              <td>
+                <button
+                  className="btn btn-primary btn-sm"
+                  onClick={() =>
+                    commonStore.setModalContent(
+                      <CreateorUpdateProVendor currentVendor={el} />
+                    )
+                  }
+                >
+                  Edit
+                </button>{" "}
+                &nbsp;&nbsp;
+                <button
+                  className="btn btn-danger btn-sm "
+                  onClick={() =>
+                    commonStore.setModalContent(
+                      <ModalDecisionContent
+                        actionName={`delete ${el.name}`}
+                        actionCallback={() =>
+                          proVendorStore.deleteProVendor(el.vendorCode)
+                        }
+                      />
+                    )
+                  }
+                >
+                  Delete
+                </button>
+              </td>
             </tr>
           )}
         />
@@ -82,7 +74,11 @@ export default observer(function Vendors() {
           color="vk"
           icon="plus circle"
           className="official-form-btn"
-          onClick={() => commonStore.setModalContent(<CreateVendorForm />)}
+          onClick={() =>
+            commonStore.setModalContent(
+              <CreateorUpdateProVendor currentVendor={null} />
+            )
+          }
         />
       </div>
     </>
